@@ -1,0 +1,88 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.3.RELEASE'
+        springCloudVersion = 'Brixton.SR3'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "net.saliman:gradle-cobertura-plugin:2.4.0"
+        classpath "de.aaschmid:gradle-cpd-plugin:1.0"
+    }
+}
+
+group 'com.thecoffeine'
+version '1.0.0.SNAPSHOT'
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'net.saliman.cobertura'
+//apply plugin: 'findbugs'
+//apply plugin: 'pmd'
+//apply plugin: "de.aaschmid.cpd"
+apply plugin: 'checkstyle'
+
+jar {
+    baseName = 'virtuoso'
+    version = '1.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//- Tasks -//
+cobertura {
+    coverageFormats = [ 'xml', 'html' ]
+}
+
+//cpdCheck {
+//    source = [ sourceSets.main.allJava, sourceSets.test.allJava ]
+//}
+
+checkstyle {
+    toolVersion = '6.12.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-undertow'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile "org.springframework.cloud:spring-cloud-starter-oauth2"
+    compile "org.springframework.cloud:spring-cloud-starter-security"
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-mail'
+
+    compile 'commons-beanutils:commons-beanutils:1.9.2'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
+    compile 'com.github.jknack:handlebars:4.0.1'
+    compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.5'
+    compile 'org.hibernate:hibernate-java8:5.0.4.Final'
+    compile 'org.apache.logging.log4j:log4j-core:2.5'
+    compile 'org.apache.logging.log4j:log4j-api:2.5'
+
+    compile 'org.springframework.restdocs:spring-restdocs-mockmvc:1.1.2.RELEASE'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.icegreen:greenmail:1.4.1'
+    testCompile 'org.hsqldb:hsqldb:2.3.2'
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.9'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}

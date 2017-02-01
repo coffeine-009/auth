@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!--~
+  ~ Copyright (c) 2014-2016 by Coffeine Inc
+  ~
+  ~ @author <a href = "mailto:vitaliy.tsutsman@musician-virtuoso.com>Vitaliy Tsutsman</a>
+  ~
+  ~ @date 5/7/16 9:17 PM
+  -->
+
+<Configuration
+  name = "tests"
+  status = "info"
+  packages = "com.coffeine.virtuoso"
+>
+  <!-- Appenders -->
+  <Appenders>
+    <Console name = "stdout" target = "SYSTEM_OUT">
+      <PatternLayout
+        pattern = "%highlight{%-5level %notEmpty{[%marker]} %d{yyyy-MM-dd HH:mm:ss} [%t] %C (%F:%L): %msg%n%throwable}{STYLE=Logback}"
+      />
+    </Console>
+  </Appenders>
+
+  <!-- Loggers -->
+  <Loggers>
+    <!-- Main -->
+    <Root level = "warn">
+      <AppenderRef ref = "stdout"/>
+    </Root>
+  </Loggers>
+</Configuration>
