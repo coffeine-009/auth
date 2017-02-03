@@ -1,6 +1,9 @@
+info:
+  component: Storage service
+
 spring:
   application:
     name: auth
   cloud:
     config:
-      uri: ${CONFIG_SERVER_URL:http://config:8888}
+      uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@config:8888}

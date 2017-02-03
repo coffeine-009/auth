@@ -16,7 +16,6 @@ import com.thecoffeine.auth.model.entity.User;
 import com.thecoffeine.auth.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -100,7 +99,13 @@ public class UserAuthenticationManager implements AuthenticationManager {
             final Access access = user.getAccess().stream().findFirst().get();
 
             //- Check if passwords are equal -//
-            isTrue( this.passwordEncoder.matches( password, access.getPassword() ) );
+            isTrue(
+                isSocialSignIn
+                || (
+                    !isSocialSignIn
+                    && this.passwordEncoder.matches( password, access.getPassword() )
+                )
+            );
 
             //- Update acces token -//
             if ( isSocialSignIn ) {

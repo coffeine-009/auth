@@ -114,12 +114,6 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
             .andExpect( jsonPath( "$.lastName" ).value( "Test" ) )
             .andExpect( jsonPath( "$.gender" ).value( false ) )
             .andExpect( jsonPath( "$.locale" ).value( "en-US" ) )
-            .andExpect( jsonPath( "$.poet", notNullValue() ) )
-            .andExpect( jsonPath( "$.poet", not( empty() ) ) )
-            .andExpect( jsonPath( "$.poet.birthday", notNullValue() ) )
-            .andExpect( jsonPath( "$.poet.birthday", not( empty() ) ) )
-//            .andExpect( jsonPath( "$.poet.birthday" ).value( "1990-08-10" ) )//FIXME: Configure JsonSerializer for LocalDate
-            .andExpect( jsonPath( "$.poet.deathDate", nullValue() ) )
             .andDo(
                 document(
                     "signup-example",
@@ -200,12 +194,6 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
             .andExpect( jsonPath( "$.lastName" ).value( "Test" ) )
             .andExpect( jsonPath( "$.gender" ).value( false ) )
             .andExpect( jsonPath( "$.locale" ).value( "en-US" ) )
-            .andExpect( jsonPath( "$.poet", notNullValue() ) )
-            .andExpect( jsonPath( "$.poet", not( empty() ) ) )
-            .andExpect( jsonPath( "$.poet.birthday", notNullValue() ) )
-            .andExpect( jsonPath( "$.poet.birthday", not( empty() ) ) )
-//            .andExpect( jsonPath( "$.poet.birthday" ).value( "1990-08-10" ) )//FIXME: Configure JsonSerializer for LocalDate
-            .andExpect( jsonPath( "$.poet.deathDate", nullValue() ) )
             .andDo(
                 document(
                     "signup-social-example",
@@ -574,7 +562,7 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
                 .contentType( MediaType.APPLICATION_JSON )
                 .content(
                     "{" +
-                        "\"email\": \"unit@test.com\"" +
+                        "\"email\": \"unit@test.org\"" +
                     "}"
                 )
         )
@@ -593,7 +581,7 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
 
         //- Check message content -//
         final String messageContent = (String) smtpServer.getReceivedMessages()[ 0 ].getContent();
-        Matcher matcher = Pattern.compile( "\\s\\w{40}\\s" ).matcher( messageContent );
+        Matcher matcher = Pattern.compile( "\\s\\$2[aby]\\$.{56}\\s" ).matcher( messageContent );
 
         assertTrue( "Cannot find link.", matcher.find() );
     }

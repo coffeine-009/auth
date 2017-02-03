@@ -13,11 +13,10 @@ import com.thecoffeine.auth.model.entity.User;
 import com.thecoffeine.auth.model.service.AccessRecoveryService;
 import com.thecoffeine.auth.model.service.RoleService;
 import com.thecoffeine.auth.model.service.UserService;
-import com.thecoffeine.auth.module.controller.AbstractRestControllerTest;
+import com.thecoffeine.auth.module.controller.AbstractControllerTest;
 import com.thecoffeine.auth.notification.model.entity.Contact;
 import com.thecoffeine.auth.security.model.persistence.mock.RoleMock;
 import com.thecoffeine.auth.security.model.persistence.mock.UserMock;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +24,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -44,11 +44,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @version 1.0
  */
-public class SecurityControllerTest extends AbstractRestControllerTest {
+public class SecurityControllerTest extends AbstractControllerTest {
 
     /// *** Properties  *** ///
     @Mock
-    private ShaPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Mock
     private RoleService roleService;
@@ -70,8 +70,6 @@ public class SecurityControllerTest extends AbstractRestControllerTest {
     @Before
     @Override
     public void tearUp() {
-
-        super.tearUp();
 
         //- Set up application -//
         this.mockMvc = MockMvcBuilders.standaloneSetup( securityController ).build();
@@ -98,7 +96,7 @@ public class SecurityControllerTest extends AbstractRestControllerTest {
         //- Mock service -//
         when( this.roleService.findByCodes( anyList() ) ).thenReturn( RoleMock.findByCodes() );
         when( this.userService.create( any( User.class ) ) ).thenReturn( UserMock.create() );
-        when( this.passwordEncoder.encodePassword( anyString(), any() ) ).thenReturn( "Te$t" );
+        when( this.passwordEncoder.encode( anyString() ) ).thenReturn( "Te$t" );
 
         //- Do Sign Up request -//
         this.mockMvc.perform(
@@ -136,7 +134,7 @@ public class SecurityControllerTest extends AbstractRestControllerTest {
         //- Mock service -//
         when( this.roleService.findByCodes( anyList() ) ).thenReturn( RoleMock.findByCodes() );
         when( this.userService.create( any( User.class ) ) ).thenReturn( UserMock.create() );
-        when( this.passwordEncoder.encodePassword( anyString(), any() ) ).thenReturn( "Te$t" );
+        when( this.passwordEncoder.encode( anyString() ) ).thenReturn( "Te$t" );
 
         //- Do Sign Up request -//
         this.mockMvc.perform(
