@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:hsqldb:mem:virtuoso
+    username: sa
+    password:
+    driver-class-name: org.hsqldb.jdbcDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  mail:
+    host: localhost
+    port: 2525
+    protocol: smtp
+    username: test
+    password: test

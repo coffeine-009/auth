@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<Configuration
+  name = "development"
+  status = "debug"
+  packages = "com.coffeine.virtuoso"
+>
+  <!-- Properties -->
+  <Properties>
+    <!-- Actions -->
+    <Property name = "actions-file-name">/var/log/virtuoso/actions.log</Property>
+    <Property name = "actions-file-pattern">
+      /var/log/virtuoso/$${date:yyyy-MM}/actions-%d{MM-dd-yyyy}-%i.log.gz
+    </Property>
+
+    <!-- Actions -->
+    <Property name = "errors-file-name">/var/log/virtuoso/errors.log</Property>
+    <Property name = "errors-file-pattern">
+      /var/log/virtuoso/$${date:yyyy-MM}/errors-%d{MM-dd-yyyy}-%i.log.gz
+    </Property>
+  </Properties>
+
+  <!-- Appenders -->
+  <Appenders>
+    <!-- Actions -->
+    <RollingFile
+      name = "actions"
+      fileName = "${actions-file-name}"
+      filePattern = "${actions-file-pattern}"
+    >
+      <PatternLayout
+        pattern = "%-4level %d{yyyy-MM-dd HH:mm:ss} [%t] %C (%F:%L): %msg%n%throwable"
+      />
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size = "250 MB"/>
+      </Policies>
+
+      <Filters>
+        <!-- Accept with marker: "ACTION" -->
+        <MarkerFilter marker = "ACTION" onMatch = "ACCEPT" onMismatch = "DENY"/>
+
+        <!-- Exclude higher lever -->
+        <ThresholdFilter level = "warn" onMatch = "DENY" onMismatch = "NEUTRAL"/>
+        <ThresholdFilter level = "error" onMatch = "DENY" onMismatch = "NEUTRAL"/>
+        <ThresholdFilter level = "fatal" onMatch = "DENY" onMismatch = "NEUTRAL"/>
+
+        <!-- Accept only info level -->
+        <ThresholdFilter level = "info" onMatch = "ACCEPT" onMismatch = "DENY"/>
+      </Filters>
+    </RollingFile>
+
+    <!-- Errors -->
+    <RollingFile
+      name = "errors"
+      fileName = "${errors-file-name}"
+      filePattern = "${errors-file-pattern}"
+    >
+      <PatternLayout
+        pattern = "%highlight{%-5level %d{yyyy-MM-dd HH:mm:ss} [%t] %C (%F:%L): %msg%n%throwable}{STYLE=Logback}"
+      />
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size = "250 MB"/>
+      </Policies>
+
+      <Filters>
+        <ThresholdFilter level = "error" onMatch = "ACCEPT" onMismatch = "DENY"/>
+      </Filters>
+    </RollingFile>
+
+    <Console name = "stdout" target = "SYSTEM_OUT">
+      <PatternLayout
+        pattern = "%highlight{%-5level %notEmpty{[%marker]} %d{yyyy-MM-dd HH:mm:ss} [%t] %C (%F:%L): %msg%n%throwable}{STYLE=Logback}"
+      />
+    </Console>
+  </Appenders>
+
+  <!-- Loggers -->
+  <Loggers>
+    <!-- Actions -->
+    <Logger name = "com.coffeine.virtuoso" level = "info">
+      <AppenderRef ref = "actions"/>
+      <AppenderRef ref = "errors"/>
+    </Logger>
+
+    <!-- Main -->
+    <Root level = "debug">
+      <AppenderRef ref = "stdout"/>
+    </Root>
+  </Loggers>
+</Configuration>

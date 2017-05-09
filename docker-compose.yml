@@ -1,0 +1,67 @@
+---
+##
+# Configuration of docker compose.
+# Link and run related images.
+#
+
+version: '2'
+
+services:
+  #- Infrastructure :: Support servers -#
+  #- Configuration -#
+  config:
+    image: coffeine/config
+    environment:
+      VCAP_APPLICATION_PORT: 8888
+    ports:
+      - "8888:8888"
+    links:
+      - discovery
+      - rabbitmq
+
+  #- Discovery -#
+  discovery:
+    image: coffeine/discovery
+    environment:
+      VCAP_APPLICATION_PORT: 8761
+    ports:
+      - "8761:8761"
+    links:
+      - rabbitmq
+
+  auth:
+    image: coffeine/auth
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "8080:8080"
+    links:
+      - config
+      - postgres
+      - rabbitmq
+
+  #- Database -#
+  postgres:
+    image: postgres:9.6
+    volumes:
+      - local_postgres:/var/lib/postgresql/data
+    ports:
+     - "5432:5432"
+    environment:
+      POSTGRES_DB: "virtuoso"
+      POSTGRES_USER: "virtuoso"
+      POSTGRES_PASSWORD: "virtuoso"
+      PGDATA: "/var/lib/postgresql/data"
+
+  #- JMS :: RabitMQ -#
+  rabbitmq:
+    image: rabbitmq:3.6
+    environment:
+      RABBITMQ_DEFAULT_USER: virtuoso
+      RABBITMQ_DEFAULT_PASS: virtuoso
+    ports:
+      - "5672"
+
+volumes:
+  #- PostgreSQL -#
+  local_postgres:
