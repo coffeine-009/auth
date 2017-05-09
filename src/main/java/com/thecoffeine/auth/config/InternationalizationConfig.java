@@ -15,6 +15,8 @@ import java.util.Locale;
 /**
  * Internationalization configuration.
  *
+ * <p>Configuration of messages for user's locale.</p>
+ *
  * @version 1.0
  */
 @Configuration
@@ -56,7 +58,9 @@ public class InternationalizationConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public MessageSource messageSource() {
-        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        final ReloadableResourceBundleMessageSource messageSource =
+            new ReloadableResourceBundleMessageSource();
+
         //- Base name -//
         messageSource.setBasenames( "classpath:i18n/messages" );
         //- File encoding -//

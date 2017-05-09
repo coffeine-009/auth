@@ -17,7 +17,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -30,12 +32,17 @@ import javax.validation.constraints.NotNull;
 @SuppressWarnings( "serial" )
 @Entity
 @Table(
-    name = "role",
+    name = "roles",
     uniqueConstraints = @UniqueConstraint(
         columnNames = {
             "code"
         }
     )
+)
+@SequenceGenerator(
+    name = "roles_sequence",
+    sequenceName = "roles_sequence",
+    allocationSize = 1
 )
 public class Role implements Serializable {
 
@@ -45,7 +52,10 @@ public class Role implements Serializable {
      * Primary key.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "roles_sequence"
+    )
     @Column
     protected Long id;
 

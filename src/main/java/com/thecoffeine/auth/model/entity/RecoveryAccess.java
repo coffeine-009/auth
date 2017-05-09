@@ -17,9 +17,11 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
@@ -42,6 +44,11 @@ import javax.validation.constraints.NotNull;
         )
     }
 )
+@SequenceGenerator(
+    name = "recovery_access_sequence",
+    sequenceName = "recovery_access_sequence",
+    allocationSize = 1
+)
 public class RecoveryAccess {
 
     /// *** Properties  *** ///
@@ -49,7 +56,10 @@ public class RecoveryAccess {
      * Unique id of record.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "recovery_access_sequence"
+    )
     @Column
     protected Long id;
 

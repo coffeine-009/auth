@@ -9,6 +9,7 @@
 package com.thecoffeine.auth.model.entity;
 
 import com.google.common.base.MoreObjects;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -18,10 +19,12 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PreUpdate;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -35,6 +38,11 @@ import javax.validation.constraints.NotNull;
 @Table(
     name = "access"
 )
+@SequenceGenerator(
+    name = "access_sequence",
+    sequenceName = "access_sequence",
+    allocationSize = 1
+)
 public class Access implements Serializable {
 
     /// *** Properties  *** ///
@@ -42,7 +50,10 @@ public class Access implements Serializable {
      * Unique id of access for user.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "access_sequence"
+    )
     @Column
     protected  Long id;
 
@@ -66,16 +77,16 @@ public class Access implements Serializable {
 
     /**
      * Date and time of last modification.
-     * //FIXME: use java.time
      */
-    @Column( columnDefinition = "TIMESTAMP NULL" )
+    @ColumnDefault( "CURRENT_TIMESTAMP" )
+    @Column( name = "updated_at", insertable = false, nullable = false )
     protected OffsetDateTime modification;
 
     /**
      * Date and time of create this access.
-     * FIXME: use java.time
      */
-    @Column( columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
+    @ColumnDefault( "CURRENT_TIMESTAMP" )
+    @Column( name = "created_at", insertable = false, nullable = false )
     protected OffsetDateTime creation;
 
 
