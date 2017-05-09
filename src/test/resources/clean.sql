@@ -1,8 +1,8 @@
 
 DELETE FROM access;
-DELETE FROM email;
+DELETE FROM emails;
 DELETE FROM social_accounts;
 DELETE FROM recovery_access;
 DELETE FROM user_roles;
-DELETE FROM role;
+DELETE FROM roles;
 DELETE FROM users;

@@ -152,7 +152,7 @@ public class SecurityController {
                     )
                 );
             }
-
+//FIXME
 //            //- Create a new composer -//
 //            if ( requestRoles.contains( Roles.COMPOSER.name() ) ) {
 //                //- Linking composer with user -//

@@ -1,0 +1,2 @@
+#- Ignore SNAPSHOT jars -#
+build/libs/auth-*-SNAPSHOT.jar

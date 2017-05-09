@@ -10,7 +10,6 @@ package com.thecoffeine.auth.security.model.entity;
 
 import com.thecoffeine.auth.model.entity.Role;
 import com.thecoffeine.auth.module.model.AbstractModel;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.junit.Test;

@@ -10,6 +10,7 @@ package com.thecoffeine.auth.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.MoreObjects;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,9 +20,11 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
@@ -36,12 +39,17 @@ import javax.validation.constraints.NotNull;
 @SuppressWarnings( "serial" )
 @Entity
 @Table(
-    name = "email",
+    name = "emails",
     uniqueConstraints = @UniqueConstraint(
         columnNames = {
             "address"
         }
     )
+)
+@SequenceGenerator(
+    name = "emails_sequence",
+    sequenceName = "emails_sequence",
+    allocationSize = 1
 )
 public class Email implements Serializable {
 
@@ -50,7 +58,10 @@ public class Email implements Serializable {
      * Unique id of contact: e-mail.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "emails_sequence"
+    )
     @Column
     protected Long id;
 
@@ -75,7 +86,8 @@ public class Email implements Serializable {
     /**
      * Time of crete this contact.
      */
-    @Column( columnDefinition = " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
+    @ColumnDefault( "CURRENT_TIMESTAMP" )
+    @Column( name = "created_at", insertable = false, nullable = false )
     protected Calendar creation;
 
 

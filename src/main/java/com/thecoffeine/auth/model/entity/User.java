@@ -29,18 +29,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import static org.springframework.util.Assert.notNull;
 
 /**
  * Class for reflect table from persistence layout.
@@ -50,6 +49,11 @@ import static org.springframework.util.Assert.notNull;
 @JsonIgnoreProperties( ignoreUnknown = true )
 @Entity
 @Table( name = "users" )
+@SequenceGenerator(
+    name = "users_sequence",
+    sequenceName = "users_sequence",
+    allocationSize = 1
+)
 public class User implements Serializable {
 
     /// *** Properties  *** ///
@@ -58,7 +62,10 @@ public class User implements Serializable {
      * Primary key.
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "users_sequence"
+    )
     @Column
     protected Long id;
 
@@ -179,7 +186,7 @@ public class User implements Serializable {
     /**
      * Time of registration.
      */
-    @Column( columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
+    @Column( name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
     protected Calendar creation;
 
 
