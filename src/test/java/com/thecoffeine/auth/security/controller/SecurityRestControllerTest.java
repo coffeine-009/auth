@@ -8,7 +8,7 @@
 
 package com.thecoffeine.auth.security.controller;
 
-import com.thecoffeine.auth.controllers.SecurityController;
+import com.thecoffeine.auth.controllers.SecurityRestController;
 import com.thecoffeine.auth.model.entity.User;
 import com.thecoffeine.auth.model.service.AccessRecoveryService;
 import com.thecoffeine.auth.model.service.RoleService;
@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -40,11 +39,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Tests for Security controller.
- * @see SecurityController
+ * @see SecurityRestController
  *
  * @version 1.0
  */
-public class SecurityControllerTest extends AbstractControllerTest {
+public class SecurityRestControllerTest extends AbstractControllerTest {
 
     /// *** Properties  *** ///
     @Mock
@@ -60,7 +59,7 @@ public class SecurityControllerTest extends AbstractControllerTest {
     private AccessRecoveryService accessRecoveryService;
 
     @InjectMocks
-    private SecurityController securityController = new SecurityController();
+    private SecurityRestController securityRestController = new SecurityRestController();
 
 
     /// *** Methods     *** ///
@@ -72,7 +71,7 @@ public class SecurityControllerTest extends AbstractControllerTest {
     public void tearUp() {
 
         //- Set up application -//
-        this.mockMvc = MockMvcBuilders.standaloneSetup( securityController ).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup( securityRestController ).build();
     }
 
     /**

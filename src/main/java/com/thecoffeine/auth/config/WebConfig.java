@@ -22,7 +22,7 @@ public class WebConfig {
     public ViewResolver viewResolver() {
         final HandlebarsViewResolver viewResolver = new HandlebarsViewResolver();
         //- Set path to views -//
-        viewResolver.setPrefix( "security/templates/" );
+        viewResolver.setPrefix( "classpath:security/templates/" );
         //- Set extension -//
         viewResolver.setSuffix( ".hbs" );
 

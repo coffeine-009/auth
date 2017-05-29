@@ -1,14 +1,26 @@
+<form action = "/login" method="post">
+    <fieldset>
+        <legend>Sign In</legend>
 
-<form action = "/login">
-    <div class = "form-group">
-        <label for = "username">Username:</label>
-        <input id = "username" class = "form-control" type = "email" />
-    </div>
+        {{! Error container }}
+        {{#if error}}
+            <div class = "alert alert-error">
+                {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
+            </div>
+        {{/if}}
 
-    <div class = "form-group">
-        <label for = "password">Username:</label>
-        <input id = "password" class = "form-control" type = "password" />
-    </div>
+        <div class = "form-group">
+            <label for = "username">Username:</label>
+            <input id = "username" class = "form-control" type = "email" name="username" />
+        </div>
 
-    <button type = "submit" class = "btn btn-primary">Login</button>
+        <div class = "form-group">
+            <label for = "password">Username:</label>
+            <input id = "password" class = "form-control" type = "password" name="password" />
+        </div>
+
+        <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
+
+        <button type = "submit" class = "btn btn-primary">Login</button>
+    </fieldset>
 </form>

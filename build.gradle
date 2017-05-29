@@ -2,7 +2,7 @@ import java.util.regex.Matcher
 
 buildscript {
     ext {
-        springBootVersion = '1.4.5.RELEASE'
+        springBootVersion = '1.5.3.RELEASE'
         springCloudVersion = 'Dalston.RELEASE'
     }
     repositories {
@@ -95,6 +95,9 @@ dependencyManagement {
 }
 
 dependencies {
+    // Development
+    compile 'org.springframework.boot:spring-boot-devtools'
+
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-undertow'
     compile 'org.springframework.boot:spring-boot-starter-actuator'

@@ -1,0 +1,17 @@
+#- Base image -#
+FROM java:8
+
+#- Author -#
+MAINTAINER Vitaliy Tsutsman <vitaliy.tsutsman@musician-virtuoso.com>
+
+# Define dafault value of DB host
+ENV DB_HOST localhost
+
+#- Expose port -#
+EXPOSE 8080
+
+#- Workdir -#
+WORKDIR /opt/auth
+
+#- Run app -#
+CMD [ "./gradlew", "build", "bootRun" ]
