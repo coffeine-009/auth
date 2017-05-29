@@ -24,7 +24,6 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -44,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @version 1.0
  */
-public class FunctionalSecurityControllerTest extends AbstractRestControllerTest {
+public class FunctionalSecurityRestControllerTest extends AbstractRestControllerTest {
 
     //- Mock SMTP server -//
     private static final GreenMail smtpServer = new GreenMail( new ServerSetup( 2525, null, "smtp" ) );
@@ -379,125 +378,6 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
     }
 
     /**
-     * Test successful sign in attempt via social network.
-     *
-     * @throws Exception    General exception from mockMVC.
-     */
-    @Test
-    public void testSignInSocialSuccess() throws Exception {
-
-        //- Success -//
-        this.mockMvc.perform(
-            post( "/oauth/token" )
-                .contentType( MediaType.APPLICATION_FORM_URLENCODED )
-                .header(
-                    "Authorization",
-                    "Basic " + new String(
-                        Base64.encodeBase64(
-                            "developer:developer32".getBytes()
-                        )
-                    )
-                )
-                .param( "grant_type", "password" )
-                .param( "scope", "read" )
-                .param( "clientId", "developer" )
-                .param( "clientSecret", "developer32" )
-                .param( "social_token", "acces$token" )
-                .param( "user_id", "1" )
-                .param( "expires_in", "3600" )
-        )
-            .andExpect( status().isOk() )
-            .andExpect( content().contentType( MediaType.APPLICATION_JSON + ";charset=UTF-8" ) )
-            .andExpect( jsonPath( "$.access_token", notNullValue() ) )
-            .andExpect( jsonPath( "$.access_token", not( empty() ) ) )
-            .andExpect( jsonPath( "$.expires_in", notNullValue() ) )
-            .andExpect( jsonPath( "$.expires_in", not( empty() ) ) )
-            .andExpect( jsonPath( "$.token_type", notNullValue() ) )
-            .andExpect( jsonPath( "$.token_type", not( empty() ) ) )
-            .andExpect( jsonPath( "$.token_type" ).value( "bearer" ) )
-            .andExpect( jsonPath( "$.scope", notNullValue() ) )
-            .andExpect( jsonPath( "$.scope", not( empty() ) ) )
-            .andExpect( jsonPath( "$.scope" ).value( "read" ) )
-            .andDo(
-                document(
-                    "sign-in-social-example",
-                    requestParameters(
-                        parameterWithName( "social_token" ).description( "Flag to auth via social." ),
-                        parameterWithName( "user_id" ).description( "User social network id." ),
-                        parameterWithName( "expires_in" ).description( "Time of life social token." ),
-                        parameterWithName( "clientId" ).description( "Client(app) id." ),
-                        parameterWithName( "clientSecret" ).description( "Client(app) password." ),
-                        parameterWithName( "scope" ).description( "Scope." ),
-                        parameterWithName( "grant_type" ).description( "Grant type." )
-                    ),
-                    responseFields(
-                        fieldWithPath( "access_token" ).description( "Token for access to private API." ),
-                        fieldWithPath( "refresh_token" ).description( "Token for refresh access token to private API." ),
-                        fieldWithPath( "scope" ).description( "Token scope." ),
-                        fieldWithPath( "token_type" ).description( "Type of token." ),
-                        fieldWithPath( "expires_in" ).description( "Time of expiring." )
-                    )
-                )
-            );
-    }
-
-    /**
-     * Test failure sign in attempt via social network.
-     *
-     * @throws Exception    General exception from mockMVC.
-     */
-    @Test
-    public void testSignInSocialFailure() throws Exception {
-
-        //- Success -//
-        this.mockMvc.perform(
-            post( "/oauth/token" )
-                .contentType( MediaType.APPLICATION_FORM_URLENCODED )
-                .header(
-                    "Authorization",
-                    "Basic " + new String(
-                        Base64.encodeBase64(
-                            "developer:developer32".getBytes()
-                        )
-                    )
-                )
-                .param( "grant_type", "password" )
-                .param( "scope", "read" )
-                .param( "clientId", "developer" )
-                .param( "clientSecret", "developer32" )
-                .param( "social_token", "acces$token" )
-                .param( "user_id", "99999999" )
-                .param( "expires_in", "3600" )
-        )
-            .andExpect( status().isBadRequest() )
-            .andExpect( content().contentType( MediaType.APPLICATION_JSON + ";charset=UTF-8" ) )
-            .andExpect( jsonPath( "$.error", notNullValue() ) )
-            .andExpect( jsonPath( "$.error", not( empty() ) ) )
-            .andExpect( jsonPath( "$.error" ).value( "invalid_grant" ) )
-            .andExpect( jsonPath( "$.error_description", notNullValue() ) )
-            .andExpect( jsonPath( "$.error_description", not( empty() ) ) )
-            .andExpect( jsonPath( "$.error_description" ).value( "Bad user credentials" ) )
-            .andDo(
-                document(
-                    "sign-in-social-example",
-                    requestParameters(
-                        parameterWithName( "social_token" ).description( "Flag to auth via social." ),
-                        parameterWithName( "user_id" ).description( "User social network id." ),
-                        parameterWithName( "expires_in" ).description( "Time of life social token." ),
-                        parameterWithName( "clientId" ).description( "Client(app) id." ),
-                        parameterWithName( "clientSecret" ).description( "Client(app) password." ),
-                        parameterWithName( "scope" ).description( "Scope." ),
-                        parameterWithName( "grant_type" ).description( "Grant type." )
-                    ),
-                    responseFields(
-                        fieldWithPath( "error" ).description( "Error code." ),
-                        fieldWithPath( "error_description" ).description( "Error message." )
-                    )
-                )
-            );
-    }
-
-    /**
      * Test unsuccessful sign in attempt.
      * Bad credentials.
      *
@@ -532,7 +412,7 @@ public class FunctionalSecurityControllerTest extends AbstractRestControllerTest
             .andExpect( jsonPath( "$.error" ).value( "invalid_grant" ) )
             .andExpect( jsonPath( "$.error_description", notNullValue() ) )
             .andExpect( jsonPath( "$.error_description", not( empty() ) ) )
-            .andExpect( jsonPath( "$.error_description" ).value( "Bad user credentials" ) )
+            .andExpect( jsonPath( "$.error_description" ).value( "Bad credentials" ) )
             .andDo(
                 document(
                     "sign-in-fail-example",

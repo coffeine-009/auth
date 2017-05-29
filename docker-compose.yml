@@ -38,10 +38,15 @@ services:
     image: coffeine/auth
     build:
       context: .
+      dockerfile: Dockerfile-dev
     environment:
       DB_HOST: postgres
+      JAVA_OPTS: "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n"
+    volumes:
+      - .:/opt/auth
     ports:
       - "8080:8080"
+      - "8000:8000"
     links:
       - config
       - discovery
