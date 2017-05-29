@@ -8,7 +8,8 @@ pipeline {
                     branches: [[name: '*/master']],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [
-                        [$class: 'UserExclusion', excludedUsers: 'ci-thecoffeine']
+                        [$class: 'UserExclusion', excludedUsers: 'ci-thecoffeine'],
+                        [$class: 'LocalBranch', localBranch: 'master']
                     ],
                     submoduleCfg: [],
                     userRemoteConfigs: [
