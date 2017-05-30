@@ -3,6 +3,7 @@ package com.thecoffeine.auth.model.matcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0
  */
 public class CsrfSecurityRequestMatcher implements RequestMatcher {
+
+    // Allow HTTP GET to load pages.
+    private Pattern allowedMethods = Pattern.compile("^POST$");
 
     private RegexRequestMatcher matcher = new RegexRequestMatcher( "/login", null );
 
@@ -24,6 +28,7 @@ public class CsrfSecurityRequestMatcher implements RequestMatcher {
     @Override
     public boolean matches( HttpServletRequest request ) {
 
-        return this.matcher.matches( request );
+        return this.allowedMethods.matcher( request.getMethod() ).matches()
+            && this.matcher.matches( request );
     }
 }

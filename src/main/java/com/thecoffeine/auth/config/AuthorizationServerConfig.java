@@ -27,7 +27,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .withClient( "developer" )
             .secret( "developer32" )
             .scopes( "read", "write" )
-            .autoApprove( true )
             .authorizedGrantTypes( "password", "authorization_code", "refresh_token" )
             .accessTokenValiditySeconds( 900 );
     }
