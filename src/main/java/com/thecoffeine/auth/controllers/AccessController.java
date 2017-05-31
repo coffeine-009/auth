@@ -20,13 +20,32 @@ import javax.servlet.http.HttpSession;
 @Scope( "session" )
 public class AccessController {
 
+    /**
+     * Form for confirming access.
+     *
+     * @param request   HTTP request.
+     * @param model     View model.
+     * @param session   HTTP session.
+     *
+     * @return View name.
+     */
     @RequestMapping( value = "/confirm_access" )
-    public String confirmation( HttpServletRequest request, Model model, HttpSession session ) {
+    public String confirmation(
+        final HttpServletRequest request,
+        final Model model,
+        final HttpSession session
+    ) {
 
         //- Set params for view -//
+        //- CSRF protection -//
         model.addAttribute( "_csrf", request.getAttribute( "_csrf" ) );
+        //- Requested scopes by client -//
         model.addAttribute( "scopes", request.getAttribute( "scopes" ) );
-        model.addAttribute( "authorizationRequest", session.getAttribute( "authorizationRequest" ) );
+        //- Request with client info -//
+        model.addAttribute(
+            "authorizationRequest",
+            session.getAttribute( "authorizationRequest" )
+        );
 
         return "access-confirmation";
     }

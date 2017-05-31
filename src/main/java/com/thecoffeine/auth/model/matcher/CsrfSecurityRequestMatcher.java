@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 public class CsrfSecurityRequestMatcher implements RequestMatcher {
 
     // Allow HTTP GET to load pages.
-    private Pattern allowedMethods = Pattern.compile("^POST$");
+    private final Pattern allowedMethods = Pattern.compile("^POST$");
 
-    private RegexRequestMatcher matcher = new RegexRequestMatcher( "/login", null );
+    private final RegexRequestMatcher matcher = new RegexRequestMatcher( "/login", null );
 
     /**
      * Decides whether the rule implemented by the strategy matches the supplied request.
