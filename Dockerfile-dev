@@ -14,4 +14,4 @@ EXPOSE 8080
 WORKDIR /opt/auth
 
 #- Run app -#
-CMD [ "./gradlew", "build", "bootRun" ]
+CMD [ "./gradlew", "-x", "test", "build", "bootRun" ]

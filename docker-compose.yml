@@ -73,7 +73,7 @@ services:
       RABBITMQ_DEFAULT_USER: virtuoso
       RABBITMQ_DEFAULT_PASS: virtuoso
     ports:
-      - "5672"
+      - "5672:5672"
 
 volumes:
   #- PostgreSQL -#
