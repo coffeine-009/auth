@@ -1,6 +1,6 @@
-<form action = "/login" method="post">
+<form action = "/login" method = "post">
     <fieldset>
-        <legend>Sign In</legend>
+        <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
 
         {{! Error container }}
         {{#if error}}
@@ -10,17 +10,19 @@
         {{/if}}
 
         <div class = "form-group">
-            <label for = "username">Username:</label>
-            <input id = "username" class = "form-control" type = "email" name="username" />
+            <label for = "username">{{i18n 'username' this bundle = "i18n/messages"}}:</label>
+            <input id = "username" class = "form-control" type = "email" name = "username" />
         </div>
 
         <div class = "form-group">
-            <label for = "password">Username:</label>
-            <input id = "password" class = "form-control" type = "password" name="password" />
+            <label for = "password">{{i18n 'password' this bundle = "i18n/messages"}}:</label>
+            <input id = "password" class = "form-control" type = "password" name = "password" />
         </div>
 
-        <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
+        <input type = "hidden" name = "{{_csrf.ParameterName}}" value = "{{_csrf.token}}"/>
 
-        <button type = "submit" class = "btn btn-primary">Login</button>
+        <button type = "submit" class = "btn btn-primary">
+            {{i18n 'login' this bundle = "i18n/messages"}}
+        </button>
     </fieldset>
 </form>
