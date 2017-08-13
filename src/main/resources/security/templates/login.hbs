@@ -1,28 +1,44 @@
-<form action = "/login" method = "post">
-    <fieldset>
-        <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
+{{#> page }}
+    <div class="container">
+        <form action="/login" method="post">
+            <fieldset>
+                <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
 
-        {{! Error container }}
-        {{#if error}}
-            <div class = "alert alert-error">
-                {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
-            </div>
-        {{/if}}
+                {{! Error container }}
+                {{#if error}}
+                    <div class="alert alert-error">
+                        {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
+                    </div>
+                {{/if}}
 
-        <div class = "form-group">
-            <label for = "username">{{i18n 'username' this bundle = "i18n/messages"}}:</label>
-            <input id = "username" class = "form-control" type = "email" name = "username" />
-        </div>
+                <div class="form-group">
+                    <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}:</label>
+                    <input
+                        id="username"
+                        class="form-control"
+                        type="email"
+                        name="username"
+                        placeholder="{{i18n 'username' this bundle = 'i18n/messages'}}"
+                    />
+                </div>
 
-        <div class = "form-group">
-            <label for = "password">{{i18n 'password' this bundle = "i18n/messages"}}:</label>
-            <input id = "password" class = "form-control" type = "password" name = "password" />
-        </div>
+                <div class="form-group">
+                    <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}:</label>
+                    <input
+                        id="password"
+                        class="form-control"
+                        type="password"
+                        name="password"
+                        placeholder="{{i18n 'password' this bundle = 'i18n/messages'}}"
+                    />
+                </div>
 
-        <input type = "hidden" name = "{{_csrf.ParameterName}}" value = "{{_csrf.token}}"/>
+                <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
 
-        <button type = "submit" class = "btn btn-primary">
-            {{i18n 'login' this bundle = "i18n/messages"}}
-        </button>
-    </fieldset>
-</form>
+                <button type="submit" class="btn btn-primary">
+                    {{i18n 'login' this bundle = "i18n/messages"}}
+                </button>
+            </fieldset>
+        </form>
+    </div>
+{{/page}}
