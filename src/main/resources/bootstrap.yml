@@ -6,4 +6,4 @@ spring:
     name: auth
   cloud:
     config:
-      uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@config:8888}
+      uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@config.thecoffeine.com:8888}

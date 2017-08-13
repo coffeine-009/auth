@@ -37,6 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure( HttpSecurity http ) throws Exception {
         http//TODO: disable csrf for AJAX
+            .cors()
+            .and()
             .authorizeRequests()
                 .antMatchers( "/security/**" ).permitAll()
                 .antMatchers( "/user/info" ).permitAll()
