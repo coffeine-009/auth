@@ -3,6 +3,7 @@ package com.thecoffeine.auth.config;
 import com.thecoffeine.auth.model.matcher.CsrfSecurityRequestMatcher;
 import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  * @version 1.0
  */
+@Profile( "default" )
 @Configuration
 @Order( ManagementServerProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
