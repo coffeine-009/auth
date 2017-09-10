@@ -1,44 +1,60 @@
 {{#> page }}
-    <div class="container">
-        <form action="/login" method="post">
+  <div class="container">
+    <div class="block">
+      <div class="info">
+        <div>
+          <h2>{{i18n 'form.sign-up.header' this bundle = "i18n/messages"}}</h2>
+          <p>{{i18n 'form.sign-up.text' this bundle = "i18n/messages"}}</p>
+          <label for="sign-up" class="btn btn-light">{{i18n 'sign-up' this bundle = "i18n/messages"}}</label>
+        </div>
+        <div>
+          <h2>{{i18n 'form.login.header' this bundle = "i18n/messages"}}</h2>
+          <p>{{i18n 'form.login.text' this bundle = "i18n/messages"}}</p>
+          <label for="sign-up" class="btn btn-light">{{i18n 'login' this bundle = "i18n/messages"}}</label>
+        </div>
+      </div>
+      <input id="sign-up" type="checkbox"/>
+      <div class="content">
+        <div class="on"></div>
+        <div class="off">
+          <form action="/login" method="post">
             <fieldset>
-                <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
+              <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
 
-                {{! Error container }}
-                {{#if error}}
-                    <div class="alert alert-error">
-                        {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
-                    </div>
-                {{/if}}
-
-                <div class="form-group">
-                    <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}:</label>
-                    <input
-                        id="username"
-                        class="form-control"
-                        type="email"
-                        name="username"
-                        placeholder="{{i18n 'username' this bundle = 'i18n/messages'}}"
-                    />
+              {{! Error container }}
+              {{#if error}}
+                <div class="alert alert-danger">
+                  {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
                 </div>
+              {{/if}}
 
-                <div class="form-group">
-                    <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}:</label>
-                    <input
-                        id="password"
-                        class="form-control"
-                        type="password"
-                        name="password"
-                        placeholder="{{i18n 'password' this bundle = 'i18n/messages'}}"
-                    />
-                </div>
+              <div class="group">
+                <input
+                    type="email"
+                    name="username"
+                    required="required"
+                />
+                <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}</label>
+              </div>
 
-                <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
+              <div class="group">
+                <input
+                    type="password"
+                    name="password"
+                    required="required"
+                />
+                <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}</label>
+              </div>
 
-                <button type="submit" class="btn btn-primary">
-                    {{i18n 'login' this bundle = "i18n/messages"}}
-                </button>
+              <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
+
+              <button type="submit" class="btn btn-primary">
+                {{i18n 'login' this bundle = "i18n/messages"}}
+              </button>
             </fieldset>
-        </form>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 {{/page}}
