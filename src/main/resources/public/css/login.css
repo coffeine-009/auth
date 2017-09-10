@@ -1,2 +1,185 @@
+html, body {
+    height: 100%;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    background: url(/images/background.jpg);
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sign-up {
+    position: fixed;
+    top: -100px;
+    left: 0;
+}
+
+#sign-up ~ .content .on {
+    visibility: hidden;
+}
+
+#sign-up:checked ~ .content .off {
+    visibility: hidden;
+    transform: translateX(25px);
+}
+
+#sign-up:checked ~ .content .on {
+    visibility: visible;
+    transform: translateX(25px);
+}
+
+.block {
+    position: relative;
+    background: black;
+    max-height: 400px;
+    opacity: .9;
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    min-width: 850px;
+    min-height: 400px;
+}
+
+.info > div {
+    flex: 1;
+    align-self: center;
+    padding: 25px;
+}
+
+.content .on, .content .off {
+    position: absolute;
+    top: -25px;
+}
+
+.content .off {
+    transition: transform .5s;
+    transform: translateX(425px);
+}
+.content .on {
+    transition: transform .5s;
+    transform: translateX(425px);
+}
+
+.content>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 5px 5px 5px #888;
+    background: white;
+    width: 400px;
+    height: 450px;
+    padding: 25px;
+}
+
+
+/* form starting stylings ------------------------------- */
+legend {
+    margin-bottom: 25px;
+}
+
+.group 			  {
+    position:relative;
+    margin-bottom:45px;
+}
+input 				{
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+input:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+.group > label {
+    color:#999;
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label 		{
+    top:-20px;
+    font-size:14px;
+    color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+    display: block;
+    position: relative;
+    width: 300px;
+}
+.bar:before, .bar:after {
+    content:'';
+    height:2px;
+    width:0;
+    bottom:1px;
+    position:absolute;
+    background:#5264AE;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+}
+.bar:before {
+    left:50%;
+}
+.bar:after {
+    right:50%;
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+    position:absolute;
+    height:60%;
+    width:100px;
+    top:25%;
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
 }
