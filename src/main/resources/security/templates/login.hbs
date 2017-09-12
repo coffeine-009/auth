@@ -15,7 +15,56 @@
       </div>
       <input id="sign-up" type="checkbox"/>
       <div class="content">
-        <div class="on"></div>
+        {{!-- Sign Up --}}
+        <div class="on">
+          <form action="/signup" method="post">
+            <fieldset>
+              <legend>{{i18n 'sign-up' this bundle = "i18n/messages"}}</legend>
+
+              {{! Error container }}
+              {{#if error}}
+                <div class="alert alert-danger">
+                  {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
+                </div>
+              {{/if}}
+
+              <div class="group">
+                <input
+                    type="text"
+                    name="name"
+                    required="required"
+                />
+                <label for="name">{{i18n 'fullname' this bundle = "i18n/messages"}}</label>
+              </div>
+
+              <div class="group">
+                <input
+                    type="email"
+                    name="username"
+                    required="required"
+                />
+                <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}</label>
+              </div>
+
+              <div class="group">
+                <input
+                    type="password"
+                    name="password"
+                    required="required"
+                />
+                <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}</label>
+              </div>
+
+              <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
+
+              <button type="submit" class="btn btn-primary">
+                {{i18n 'sign-up' this bundle = "i18n/messages"}}
+              </button>
+            </fieldset>
+          </form>
+        </div>
+
+        {{!-- Sign In --}}
         <div class="off">
           <form action="/login" method="post">
             <fieldset>
