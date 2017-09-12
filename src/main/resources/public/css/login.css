@@ -88,19 +88,19 @@ legend {
     margin-bottom: 25px;
 }
 
-.group 			  {
+.group {
     position:relative;
     margin-bottom:45px;
 }
-input 				{
-    font-size:18px;
-    padding:10px 10px 10px 5px;
-    display:block;
-    width:300px;
-    border:none;
-    border-bottom:1px solid #757575;
-}
-input:focus 		{ outline:none; }
+    .group > input {
+        font-size:18px;
+        padding:10px 10px 10px 5px;
+        display:block;
+        width:300px;
+        border:none;
+        border-bottom:1px solid #757575;
+    }
+    .group > input:focus { outline:none; }
 
 /* LABEL ======================================= */
 .group > label {
@@ -117,7 +117,7 @@ input:focus 		{ outline:none; }
 }
 
 /* active state */
-input:focus ~ label, input:valid ~ label 		{
+.group > input:focus ~ label, .group > input:valid ~ label {
     top:-20px;
     font-size:14px;
     color:#5264AE;
@@ -164,7 +164,7 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 }
 
 /* active state */
-input:focus ~ .highlight {
+.group > input:focus ~ .highlight {
     -webkit-animation:inputHighlighter 0.3s ease;
     -moz-animation:inputHighlighter 0.3s ease;
     animation:inputHighlighter 0.3s ease;
@@ -182,4 +182,11 @@ input:focus ~ .highlight {
 @keyframes inputHighlighter {
     from { background:#5264AE; }
     to 	{ width:0; background:transparent; }
+}
+
+
+/************ Approve ***************/
+.layer {
+    background: white;
+    padding: 15px;
 }

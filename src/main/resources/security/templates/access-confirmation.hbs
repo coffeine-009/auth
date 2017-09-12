@@ -1,24 +1,28 @@
 {{#> page }}
     <div class="container">
+      <div class="layer">
         <form action="/oauth/authorize" method="post">
             <fieldset>
                 <legend>{{i18n 'access.confirmation' this bundle = "i18n/messages"}}</legend>
 
                 {{! Error container }}
-                <div class="alert alert-error">
+                <div class="alert alert-warning">
                     {{i18n "access.confirmation.client.title" authorizationRequest.clientId bundle = "i18n/messages"}}
                 </div>
 
                 {{#each scopes}}
-                    <div class="form-group">
-                        <label for="username">{{@key}}:</label>
-                        <input
-                            class="form-control"
-                            type="checkbox"
-                            name="{{@key}}"
-                            value="true"
-                        />
-                    </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                          type="checkbox"
+                          class="form-check-input"
+                          type="checkbox"
+                          name="{{@key}}"
+                          value="true"
+                      />
+                      {{@key}}
+                    </label>
+                  </div>
                 {{/each}}
 
                 <input name='user_oauth_approval' value='true' type='hidden'/>
@@ -29,5 +33,6 @@
                 </button>
             </fieldset>
         </form>
+      </div>
     </div>
 {{/page}}

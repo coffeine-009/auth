@@ -1,8 +1,11 @@
 package com.thecoffeine.auth.controllers;
 
+import com.thecoffeine.auth.view.form.RegistrationForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,5 +32,22 @@ public class SecurityController {
         model.addAttribute( "error", request.getParameterMap().containsKey( "error" ) );
 
         return "login";
+    }
+
+    /**
+     * Handle Sign Up.
+     *
+     * @param request HTTP request.
+     *
+     * @return View name.
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String signUp(
+        @RequestBody
+        RegistrationForm form,
+
+        HttpServletRequest request
+    ) {
+        return "sign-up.success";
     }
 }
