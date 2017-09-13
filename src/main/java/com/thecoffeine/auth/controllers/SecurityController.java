@@ -41,7 +41,7 @@ public class SecurityController {
      *
      * @return View name.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signUp(
         @RequestBody
         RegistrationForm form,
