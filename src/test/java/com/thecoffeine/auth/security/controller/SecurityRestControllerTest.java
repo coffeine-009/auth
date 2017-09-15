@@ -9,14 +9,11 @@
 package com.thecoffeine.auth.security.controller;
 
 import com.thecoffeine.auth.controllers.SecurityRestController;
-import com.thecoffeine.auth.model.entity.User;
 import com.thecoffeine.auth.model.service.AccessRecoveryService;
 import com.thecoffeine.auth.model.service.RoleService;
 import com.thecoffeine.auth.model.service.UserService;
 import com.thecoffeine.auth.module.controller.AbstractControllerTest;
 import com.thecoffeine.auth.notification.model.entity.Contact;
-import com.thecoffeine.auth.security.model.persistence.mock.RoleMock;
-import com.thecoffeine.auth.security.model.persistence.mock.UserMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,15 +23,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -83,71 +76,6 @@ public class SecurityRestControllerTest extends AbstractControllerTest {
         //- Clean environment after run tests -//
     }
 
-
-    /**
-     * Test for sign up a new user.
-     *
-     * @throws Exception    General Exception of application.
-     */
-    @Test
-    public void testSignupActionSuccess() throws Exception {
-
-        //- Mock service -//
-        when( this.roleService.findByCodes( anyList() ) ).thenReturn( RoleMock.findByCodes() );
-        when( this.userService.create( any( User.class ) ) ).thenReturn( UserMock.create() );
-        when( this.passwordEncoder.encode( anyString() ) ).thenReturn( "Te$t" );
-
-        //- Do Sign Up request -//
-        this.mockMvc.perform(
-            post( "/security/signup" )
-                .contentType( MediaType.APPLICATION_JSON )
-                .content(
-                    "{" +
-                        "\"username\": \"unit@test.com\", " +
-                        "\"password\": \"Te$t\", " +
-                        "\"firstName\": \"Unit\", " +
-                        "\"lastName\": \"test\", " +
-                        "\"gender\": false, " +
-                        "\"locale\": \"en-US\", " +
-                        "\"roles\": [" +
-                            "\"POET\"" +
-                        "], " +
-                        "\"birthday\": \"1990-08-10\"" +
-                    "}"
-                )
-        )
-            .andExpect( status().isCreated() )
-            .andExpect( jsonPath( "$", notNullValue() ) )
-            .andExpect( jsonPath( "$.roles[0].code", notNullValue() ) );
-            //TODO: finish
-    }
-
-    /**
-     * Test for sign up a new user with invalid input.
-     *
-     * @throws Exception    General Exception of application.
-     */
-    @Test
-    public void testSignupActionFailure() throws Exception {
-
-        //- Mock service -//
-        when( this.roleService.findByCodes( anyList() ) ).thenReturn( RoleMock.findByCodes() );
-        when( this.userService.create( any( User.class ) ) ).thenReturn( UserMock.create() );
-        when( this.passwordEncoder.encode( anyString() ) ).thenReturn( "Te$t" );
-
-        //- Do Sign Up request -//
-        this.mockMvc.perform(
-            post("/security/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    "{" +
-                        "\"username\": \"unit#test.com\", " +
-                        "\"password\": \"Te$t\"" +
-                    "}"
-                )
-        )
-            .andExpect( status().isBadRequest() );
-    }
 
     /**
      * Test for success of forgotPassword action.

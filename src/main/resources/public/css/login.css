@@ -190,3 +190,10 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
     background: white;
     padding: 15px;
 }
+
+.has-danger > input {
+    color: red;
+}
+.has-danger .form-control-feedback {
+    color: red;
+}

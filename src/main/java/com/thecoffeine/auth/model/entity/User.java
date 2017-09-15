@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -315,6 +316,34 @@ public class User implements Serializable {
         this.emails = null;
         this.firstName = firstName;
         this.locale = locale;
+    }
+
+    /**
+     * Constructor for create user.
+     *
+     * @param access       Access,
+     * @param email        E-mail.
+     * @param firstName    First name
+     * @param locale       Default locale
+     */
+    public User(
+        Access access,
+        Email email,
+        String firstName,
+        String lastName,
+        Locale locale
+    ) {
+        //- Call default constructor -//
+        this();
+        access.setUser( this );
+        email.setUser( this );
+
+        //- Initialization -//
+        this.access.add( access );
+        this.emails.add( email );
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.locale = locale.toLanguageTag();
     }
 
     /**
