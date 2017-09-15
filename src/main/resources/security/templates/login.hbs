@@ -3,47 +3,52 @@
     <div class="block">
       <div class="info">
         <div>
-          <h2>{{i18n 'form.sign-up.header' this bundle = "i18n/messages"}}</h2>
-          <p>{{i18n 'form.sign-up.text' this bundle = "i18n/messages"}}</p>
-          <label for="sign-up" class="btn btn-light">{{i18n 'sign-up' this bundle = "i18n/messages"}}</label>
+          <h2>{{message 'form.sign-up.header'}}</h2>
+          <p>{{message 'form.sign-up.text'}}</p>
+          <label for="sign-up" class="btn btn-light">{{message 'sign-up'}}</label>
         </div>
         <div>
-          <h2>{{i18n 'form.login.header' this bundle = "i18n/messages"}}</h2>
-          <p>{{i18n 'form.login.text' this bundle = "i18n/messages"}}</p>
-          <label for="sign-up" class="btn btn-light">{{i18n 'login' this bundle = "i18n/messages"}}</label>
+          <h2>{{message 'form.login.header'}}</h2>
+          <p>{{message 'form.login.text'}}</p>
+          <label for="sign-up" class="btn btn-light">{{message 'login'}}</label>
         </div>
       </div>
-      <input id="sign-up" type="checkbox"/>
+      <input id="sign-up" type="checkbox" {{#if isSignUp}} checked="checked" {{/if}}/>
       <div class="content">
         {{!-- Sign Up --}}
         <div class="on">
           <form action="/signup" method="post">
             <fieldset>
-              <legend>{{i18n 'sign-up' this bundle = "i18n/messages"}}</legend>
+              <legend>{{message 'sign-up'}}</legend>
 
               {{! Error container }}
               {{#if error}}
                 <div class="alert alert-danger">
-                  {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
+                  {{message "form.login.invalid_params"}}
                 </div>
               {{/if}}
 
               <div class="group">
                 <input
                     type="text"
-                    name="name"
+                    name="fullName"
                     required="required"
+                    value="{{fullName}}"
                 />
-                <label for="name">{{i18n 'fullname' this bundle = "i18n/messages"}}</label>
+                <label for="name">{{message 'fullname'}}</label>
               </div>
 
-              <div class="group">
+              <div class="group {{#if duplicate}} has-danger {{/if}}">
                 <input
                     type="email"
                     name="username"
                     required="required"
+                    value="{{username}}"
                 />
-                <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}</label>
+                <label for="username">{{message 'username'}}</label>
+                {{#if duplicate}}
+                  <div class="form-control-feedback">{{message 'error.username.duplicate'}}</div>
+                {{/if}}
               </div>
 
               <div class="group">
@@ -52,13 +57,11 @@
                     name="password"
                     required="required"
                 />
-                <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}</label>
+                <label for="password">{{message 'password'}}</label>
               </div>
 
-              <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
-
               <button type="submit" class="btn btn-primary">
-                {{i18n 'sign-up' this bundle = "i18n/messages"}}
+                {{message 'sign-up'}}
               </button>
             </fieldset>
           </form>
@@ -68,12 +71,12 @@
         <div class="off">
           <form action="/login" method="post">
             <fieldset>
-              <legend>{{i18n 'login' this bundle = "i18n/messages"}}</legend>
+              <legend>{{message 'login'}}</legend>
 
               {{! Error container }}
               {{#if error}}
                 <div class="alert alert-danger">
-                  {{i18n "form.login.invalid_params" this bundle = "i18n/messages"}}
+                  {{message "form.login.invalid_params"}}
                 </div>
               {{/if}}
 
@@ -83,7 +86,7 @@
                     name="username"
                     required="required"
                 />
-                <label for="username">{{i18n 'username' this bundle = "i18n/messages"}}</label>
+                <label for="username">{{message 'username'}}</label>
               </div>
 
               <div class="group">
@@ -92,13 +95,13 @@
                     name="password"
                     required="required"
                 />
-                <label for="password">{{i18n 'password' this bundle = "i18n/messages"}}</label>
+                <label for="password">{{message 'password'}}</label>
               </div>
 
               <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
 
               <button type="submit" class="btn btn-primary">
-                {{i18n 'login' this bundle = "i18n/messages"}}
+                {{message 'login'}}
               </button>
             </fieldset>
           </form>

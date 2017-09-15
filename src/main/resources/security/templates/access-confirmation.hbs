@@ -3,11 +3,11 @@
       <div class="layer">
         <form action="/oauth/authorize" method="post">
             <fieldset>
-                <legend>{{i18n 'access.confirmation' this bundle = "i18n/messages"}}</legend>
+                <legend>{{message 'access.confirmation'}}</legend>
 
                 {{! Error container }}
                 <div class="alert alert-warning">
-                    {{i18n "access.confirmation.client.title" authorizationRequest.clientId bundle = "i18n/messages"}}
+                    {{message "access.confirmation.client.title" authorizationRequest.clientId}}
                 </div>
 
                 {{#each scopes}}
@@ -29,7 +29,7 @@
                 <input type="hidden" name="{{_csrf.ParameterName}}" value="{{_csrf.token}}"/>
 
                 <button type="submit" class="btn btn-primary">
-                    {{i18n 'approve' bundle = "i18n/messages"}}
+                    {{message 'approve'}}
                 </button>
             </fieldset>
         </form>
