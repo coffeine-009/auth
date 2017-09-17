@@ -13,15 +13,15 @@ import com.thecoffeine.auth.notification.model.entity.Contact;
 import com.thecoffeine.auth.notification.model.entity.Message;
 import com.thecoffeine.auth.notification.model.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 /**
  * E-mail implementation of notification service.
  * Send e-mails.
  *
- * @version 1.0
+ * @version 1.1
  *
  * @see NotificationService
  */
@@ -33,7 +33,7 @@ public class MailService implements NotificationService {
      * Provider for sending e-mails.
      */
     @Autowired
-    private MailSender sender;
+    private JavaMailSender sender;
 
 
     /// *** Methods     *** ///
@@ -48,15 +48,14 @@ public class MailService implements NotificationService {
     public void send( Contact from, Contact to, Message message ) {
 
         //- Create e-mail -//
-        SimpleMailMessage email = new SimpleMailMessage();
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            //- Set e-mail content -//
+            mimeMessage.setHeader( "Content-Type", "text/plain; charset=UTF-8" );
+            mimeMessage.setRecipients( javax.mail.Message.RecipientType.TO, to.getAddress() );
+            mimeMessage.setSubject( message.getSubject(), "UTF-8" );
+            mimeMessage.setContent( message.getText(), "text/plain" );
+        };
 
-        //- Set e-mail content -//
-        email.setFrom( from.getAddress() );
-        email.setTo( to.getAddress() );
-        email.setSubject( message.getSubject() );
-        email.setText( message.getText() );
-        //TODO: add additional params
-
-        this.sender.send( email );
+        this.sender.send( messagePreparator );
     }
 }

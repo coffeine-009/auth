@@ -10,6 +10,7 @@
 package com.thecoffeine.auth.model.service.implementation;
 
 
+import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.thecoffeine.auth.model.entity.User;
@@ -155,10 +156,15 @@ public class UserServiceImpl implements UserService {
             //- Prepare content -//
             Template template = this.templateManager.compile( "security.signup" );
 
+            Context context = Context
+                .newBuilder( newUser )
+                .combine( "locale", LocaleContextHolder.getLocale().toLanguageTag() )
+                .build();
+
             //FIXME: get email more safely
             //- Send notification-//
             this.notificationService.send(
-                new EmailAddress( "system@virtuoso.com" ),
+                new EmailAddress( "support@musician-virtuoso.com" ),
                 new EmailAddress( newUser.getEmails().get( 0 ).getAddress() ),
                 new Email(
                     this.messageSource.getMessage(
@@ -166,7 +172,7 @@ public class UserServiceImpl implements UserService {
                         null,
                         LocaleContextHolder.getLocale()
                     ),
-                    template.apply( newUser )
+                    template.apply( context )
                 )
             );
         } catch ( IOException e ) {
